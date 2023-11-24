@@ -63,10 +63,8 @@
     "uploadthing": "^5.5.2",
     "uuid": "^9.0.0",
     "zod": "^3.22.2",
-    "zustand": "^4.4.1"
-  },
-  "devDependencies": {
+    "zustand": "^4.4.1",
     "@types/uuid": "^9.0.3",
     "prisma": "^5.2.0"
-  }
+  },
 }
