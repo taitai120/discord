@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -37,7 +38,7 @@ const formSchema = z.object({
 });
 
 export const CreateServerModal = () => {
-  const { isOpen, onClose, type } = useModal();
+  const { isOpen, onClose, type, onOpen } = useModal();
   const router = useRouter();
 
   const isModalOpen = isOpen && type === "createServer";
@@ -122,10 +123,25 @@ export const CreateServerModal = () => {
                 )}
               />
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
+            <DialogFooter className="bg-gray-100 px-6 py-4 !justify-between">
               <Button variant="primary" disabled={isLoading}>
                 Create
               </Button>
+              <DialogClose
+                asChild
+                className="text-blue-500 cursor-pointer hover:bg-inherit hover:text-blue-500/90"
+              >
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => {
+                    onOpen("joinServer", undefined);
+                  }}
+                  disabled={isLoading}
+                >
+                  Have an invite already? Join a server.
+                </Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>

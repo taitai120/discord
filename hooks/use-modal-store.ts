@@ -3,6 +3,7 @@ import { create } from "zustand";
 
 export type ModalType =
   | "createServer"
+  | "joinServer"
   | "invite"
   | "editServer"
   | "members"

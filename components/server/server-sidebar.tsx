@@ -1,22 +1,37 @@
-import { currentProfile } from "@/lib/current-profile";
-import { redirect } from "next/navigation";
-import { db } from "@/lib/db";
-import { ServerHeader } from "./server-header";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { ServerSearch } from "./server-search";
-
 import { ChannelType, MemberRole } from "@prisma/client";
+import { redirect } from "next/navigation";
 import { Hash, Mic, ShieldAlert, ShieldCheck, Video } from "lucide-react";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { currentProfile } from "@/lib/current-profile";
+import { db } from "@/lib/db";
+
+import { ServerHeader } from "./server-header";
+import { ServerSearch } from "./server-search";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
 
-interface ServerSideBarProps {
+interface ServerSidebarProps {
   serverId: string;
 }
 
-export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
+const iconMap = {
+  [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
+  [ChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
+  [ChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />,
+};
+
+const roleIconMap = {
+  [MemberRole.GUEST]: null,
+  [MemberRole.MODERATOR]: (
+    <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />
+  ),
+  [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
+};
+
+export const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
@@ -65,22 +80,8 @@ export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
     (member) => member.profileId === profile.id
   )?.role;
 
-  const iconMap = {
-    [ChannelType.TEXT]: <Hash className="mr-2 h-4 w-4" />,
-    [ChannelType.AUDIO]: <Mic className="mr-2 h-4 w-4" />,
-    [ChannelType.VIDEO]: <Video className="mr-2 h-4 w-4" />,
-  };
-
-  const roleIconMap = {
-    [MemberRole.GUEST]: null,
-    [MemberRole.MODERATOR]: (
-      <ShieldCheck className="h-4 w-4 mr-2 text-indigo-500" />
-    ),
-    [MemberRole.ADMIN]: <ShieldAlert className="h-4 w-4 mr-2 text-rose-500" />,
-  };
-
   return (
-    <div className="flex flex-col h-full text-primary w-full dark:bg-[#2b2d31] bg-[#f2f3f5]">
+    <div className="flex flex-col h-full text-primary w-full dark:bg-[#2B2D31] bg-[#F2F3F5]">
       <ServerHeader server={server} role={role} />
       <ScrollArea className="flex-1 px-3">
         <div className="mt-2">
@@ -139,8 +140,8 @@ export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
                 <ServerChannel
                   key={channel.id}
                   channel={channel}
-                  server={server}
                   role={role}
+                  server={server}
                 />
               ))}
             </div>
@@ -152,15 +153,15 @@ export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
               sectionType="channels"
               channelType={ChannelType.AUDIO}
               role={role}
-              label="Audio Channels"
-            />{" "}
+              label="Voice Channels"
+            />
             <div className="space-y-[2px]">
               {audioChannels.map((channel) => (
                 <ServerChannel
                   key={channel.id}
                   channel={channel}
-                  server={server}
                   role={role}
+                  server={server}
                 />
               ))}
             </div>
@@ -179,8 +180,8 @@ export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
                 <ServerChannel
                   key={channel.id}
                   channel={channel}
-                  server={server}
                   role={role}
+                  server={server}
                 />
               ))}
             </div>
@@ -190,7 +191,6 @@ export const ServerSideBar = async ({ serverId }: { serverId: string }) => {
           <div className="mb-2">
             <ServerSection
               sectionType="members"
-              channelType={ChannelType.VIDEO}
               role={role}
               label="Members"
               server={server}

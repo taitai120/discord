@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ModalProvider } from "@/components/providers/modal-provider";
 import { SocketProvider } from "@/components/providers/socket-provider";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { Toaster } from "@/components/ui/toaster";
 
 const font = Be_Vietnam_Pro({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
           >
             <SocketProvider>
               <ModalProvider />
+              <Toaster />
               <QueryProvider>{children}</QueryProvider>
             </SocketProvider>
           </ThemeProvider>

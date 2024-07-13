@@ -5,6 +5,7 @@ import "@uploadthing/react/styles.css";
 
 import { FileIcon, X } from "lucide-react";
 import Image from "next/image";
+import { useToast } from "@/components/ui/use-toast";
 
 interface FileUploadProps {
   onChange: (url?: string) => void;
@@ -14,6 +15,7 @@ interface FileUploadProps {
 
 export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
   const fileType = value?.split(".").pop();
+  const { toast } = useToast();
 
   if (value && fileType !== "pdf") {
     return (
@@ -62,7 +64,11 @@ export const FileUpload = ({ onChange, value, endpoint }: FileUploadProps) => {
         onChange(res?.[0].url);
       }}
       onUploadError={(error: Error) => {
-        console.log("error", error);
+        const fieldErrors = error.message;
+        toast({
+          title: "Upload file error",
+          description: fieldErrors,
+        });
       }}
     />
   );

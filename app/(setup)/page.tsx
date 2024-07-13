@@ -16,11 +16,13 @@ const SetupPage = async () => {
     },
   });
 
+  const servers = await db.server.findMany();
+
   if (server) {
     return redirect(`/servers/${server.id}`);
   }
 
-  return <InitialModal />;
+  return <InitialModal servers={servers} />;
 };
 
 export default SetupPage;

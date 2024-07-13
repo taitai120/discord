@@ -11,7 +11,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import {
-  AlignLeft,
   ChevronDown,
   LogOut,
   PlusCircle,
@@ -21,6 +20,7 @@ import {
   Users,
 } from "lucide-react";
 import { useModal } from "@/hooks/use-modal-store";
+import { cn } from "@/lib/utils";
 
 interface ServerHeaderProps {
   server: ServerWithMembersWithProfiles;
@@ -33,12 +33,12 @@ export const ServerHeader = ({ server, role }: ServerHeaderProps) => {
   const isModerator = isAdmin || role === MemberRole.MODERATOR;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger className="focus:outline-none" asChild>
-        <button className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700 dark:hover:bg-zinc-700/50 transition">
+        <div className="w-full text-md font-semibold px-3 flex items-center h-12 border-neutral-200 dark:border-neutral-800 border-b-2 hover:bg-zinc-700 dark:hover:bg-zinc-700/50 transition">
           {server.name}
           <ChevronDown className="h-5 w-5 ml-auto" />
-        </button>
+        </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 text-xs font-medium text-black dark:text-neutral-400 space-y-[2px]">
         {isModerator && (

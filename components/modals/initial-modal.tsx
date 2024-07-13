@@ -13,6 +13,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Form,
@@ -26,6 +27,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { FileUpload } from "@/components/file-upload";
 import { useRouter } from "next/navigation";
+import { Server } from "@prisma/client";
+import { useModal } from "@/hooks/use-modal-store";
+import { useUser } from "@clerk/nextjs";
 
 const formSchema = z.object({
   name: z.string().min(1, {
@@ -36,13 +40,20 @@ const formSchema = z.object({
   }),
 });
 
-export const InitialModal = () => {
+interface InitialModalProps {
+  servers: Server[];
+}
+
+export const InitialModal = ({ servers }: InitialModalProps) => {
   const [isMounted, setIsMounted] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { onOpen, onClose } = useModal();
 
   const router = useRouter();
 
   useEffect(() => {
     setIsMounted(true);
+    setIsOpen(true);
   }, []);
 
   const form = useForm({
@@ -72,7 +83,7 @@ export const InitialModal = () => {
   }
 
   return (
-    <Dialog open>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
@@ -125,10 +136,26 @@ export const InitialModal = () => {
                 )}
               />
             </div>
-            <DialogFooter className="bg-gray-100 px-6 py-4">
-              <Button variant="primary" disabled={isLoading}>
+            <DialogFooter className="bg-gray-100 px-6 py-4 !justify-between">
+              <Button
+                variant="primary"
+                disabled={isLoading || !form.getValues("imageUrl")}
+              >
                 Create
               </Button>
+              <DialogClose
+                asChild
+                className="text-blue-500 cursor-pointer hover:bg-inherit hover:text-blue-500/90"
+              >
+                <Button
+                  type="button"
+                  variant="ghost"
+                  onClick={() => onOpen("joinServer", undefined)}
+                  disabled={isLoading}
+                >
+                  Have an invite already? Join a server.
+                </Button>
+              </DialogClose>
             </DialogFooter>
           </form>
         </Form>

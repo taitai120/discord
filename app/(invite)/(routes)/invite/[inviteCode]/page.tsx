@@ -2,7 +2,6 @@ import { currentProfile } from "@/lib/current-profile";
 import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import { useEffect } from "react";
 
 interface InviteCodePageProps {
   params: {
@@ -44,6 +43,10 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
       },
     },
   });
+
+  if (server) {
+    return redirect(`/servers/${server.id}`);
+  }
 
   return <div>Invite Code Page</div>;
 };
