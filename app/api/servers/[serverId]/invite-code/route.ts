@@ -38,8 +38,6 @@ export async function PATCH(
       },
     });
 
-    console.log("server", server);
-
     return NextResponse.json(server);
   } catch (error) {
     console.log("[SERVER_ID]", error);

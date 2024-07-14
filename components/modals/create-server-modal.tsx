@@ -55,9 +55,10 @@ export const CreateServerModal = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
-      await axios.post("/api/servers", values);
+      const res = await axios.post("/api/servers", values);
 
       form.reset();
+      onClose();
       router.refresh();
     } catch (error) {
       console.log(error);
@@ -112,10 +113,10 @@ export const CreateServerModal = () => {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        {...field}
                         disabled={isLoading}
                         className="bg-zinc-300/50 border-0 focus-visible:ring-0 text-black focus-visible:ring-offset-0"
                         placeholder="Enter server name"
-                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
@@ -135,7 +136,9 @@ export const CreateServerModal = () => {
                   type="button"
                   variant="ghost"
                   onClick={() => {
-                    onOpen("joinServer", undefined);
+                    setTimeout(() => {
+                      onOpen("joinServer", undefined);
+                    }, 50);
                   }}
                   disabled={isLoading}
                 >
