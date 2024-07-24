@@ -32,7 +32,6 @@ export const useChatSocket = ({
         if (!oldData || !oldData.pages || oldData.pages.length === 0) {
           return oldData;
         }
-
         const newData = oldData.pages.map((page: any) => {
           return {
             ...page,
