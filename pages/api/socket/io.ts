@@ -18,7 +18,7 @@ const ioHandler = (req: NextApiRequest, res: NextApiResponseServerIo) => {
       path: path,
       // @ts-ignore
       addTrailingSlash: false,
-      transports: ["websocket"],
+      transports: ["websocket", "polling"],
     });
     res.socket.server.io = io;
   }
