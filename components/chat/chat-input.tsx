@@ -39,12 +39,14 @@ export const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
+      const start = performance.now();
       const url = qs.stringifyUrl({
         url: apiUrl,
         query,
       });
       await axios.post(url, values);
-
+      const end = performance.now();
+      console.log(`Call to doSomething took ${end - start} milliseconds`);
       form.reset();
       router.refresh();
     } catch (error) {
