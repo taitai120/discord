@@ -31,7 +31,7 @@ export const LeaveServerModal = () => {
 
       onClose();
       router.refresh();
-      router.push("/");
+      router.push("/web");
     } catch (error) {
       console.log(error);
     } finally {

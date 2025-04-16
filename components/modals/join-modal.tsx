@@ -56,7 +56,7 @@ export const JoinModal = () => {
         });
         onClose();
         setTimeout(() => {
-          router.push(`/servers/${res.data.id}`);
+          router.push(`/web/servers/${res.data.id}`);
           router.refresh();
         }, 500);
       }

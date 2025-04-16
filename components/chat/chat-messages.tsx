@@ -86,6 +86,7 @@ export const ChatMessages = ({
       </div>
     );
   }
+  console.log("data", data);
 
   return (
     <div ref={chatRef} className="flex-1 flex flex-col py-4 overflow-y-auto">
@@ -105,6 +106,7 @@ export const ChatMessages = ({
           )}
         </div>
       )}
+
       <div className="flex flex-col-reverse mt-auto">
         {data?.pages?.map((group, i) => (
           <Fragment key={i}>

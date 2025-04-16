@@ -66,7 +66,7 @@ export const ChatItem = ({
       return;
     }
 
-    router.push(`/servers/${params?.serverId}/conversations/${member.id}`);
+    router.push(`/web/servers/${params?.serverId}/conversations/${member.id}`);
   };
 
   useEffect(() => {

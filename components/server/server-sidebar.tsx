@@ -35,7 +35,7 @@ export const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
   const profile = await currentProfile();
 
   if (!profile) {
-    return redirect("/");
+    return redirect("/web");
   }
 
   const server = await db.server.findUnique({
@@ -73,7 +73,7 @@ export const ServerSideBar = async ({ serverId }: ServerSidebarProps) => {
   );
 
   if (!server) {
-    return redirect("/");
+    return redirect("/web");
   }
 
   const role = server.members.find(

@@ -14,7 +14,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
 
   if (!profile) return redirectToSignIn();
 
-  if (!params.inviteCode) return redirect("/");
+  if (!params.inviteCode) return redirect("/web");
 
   const existingServer = await db.server.findFirst({
     where: {
@@ -27,7 +27,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
     },
   });
 
-  if (existingServer) return redirect(`/servers/${existingServer.id}`);
+  if (existingServer) return redirect(`/web/servers/${existingServer.id}`);
 
   const server = await db.server.update({
     where: {
@@ -45,7 +45,7 @@ const InviteCodePage = async ({ params }: InviteCodePageProps) => {
   });
 
   if (server) {
-    return redirect(`/servers/${server.id}`);
+    return redirect(`/web/servers/${server.id}`);
   }
 
   return <div>Invite Code Page</div>;

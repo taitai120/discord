@@ -43,6 +43,7 @@
     "emoji-mart": "^5.5.2",
     "eslint": "8.48.0",
     "eslint-config-next": "13.4.12",
+    "framer-motion": "^12.7.3",
     "livekit-client": "^1.15.13",
     "livekit-server-sdk": "^1.2.6",
     "lucide-react": "^0.274.0",

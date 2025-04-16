@@ -11,7 +11,7 @@ import { UserButton } from "@clerk/nextjs";
 export const NavigationSideBar = async () => {
   const profile = await currentProfile();
 
-  if (!profile) return redirect("/");
+  if (!profile) return redirect("/web");
 
   const servers = await db.server.findMany({
     where: {
@@ -41,7 +41,7 @@ export const NavigationSideBar = async () => {
       <div className="pb-3 mt-auto flex items-center flex-col gap-y-4">
         <ModeToggle />
         <UserButton
-          afterSignOutUrl="/"
+          afterSignOutUrl="/web"
           appearance={{
             elements: {
               avatarBox: "h-[48px] w-[48px]",

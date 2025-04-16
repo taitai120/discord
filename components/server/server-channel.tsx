@@ -43,7 +43,7 @@ export const ServerChannel = ({
   };
 
   const onClickChannel = () => {
-    router.push(`/servers/${params?.serverId}/channels/${channel.id}`);
+    router.push(`/web/servers/${params?.serverId}/channels/${channel.id}`);
   };
 
   return (
