@@ -1,44 +1,34 @@
 "use client";
 
-import { CreateServerModal } from "@/components/modals/create-server-modal";
-import { useEffect, useState } from "react";
-import { InviteModal } from "@/components/modals/invite-modal";
-import { EditServerModal } from "@/components/modals/edit-server-modal";
-import { MembersModal } from "@/components/modals/members-modal";
-import { CreateChannelModal } from "@/components/modals/create-channel-modal";
-import { LeaveServerModal } from "@/components/modals/leave-server-modal";
-import { DeleteServerModal } from "@/components/modals/delete-server-modal";
-import { DeleteChannelModal } from "@/components/modals/delete-channel-modal";
-import { EditChannelModal } from "@/components/modals/edit-channel-modal";
-import { MessageFileModal } from "@/components/modals/message-file-modal";
-import { DeleteMessageModal } from "@/components/modals/delete-message-modal";
-import { JoinModal } from "@/components/modals/join-modal";
+import * as React from "react";
+import { useModal } from "@/hooks/use-modal-store";
+import { getLazyModal } from "@/lib/modal-registry";
 
 export const ModalProvider = () => {
-  const [isMounted, setIsMounted] = useState(false);
+  const [isMounted, setIsMounted] = React.useState(false);
+  const { type, isOpen } = useModal();
 
-  useEffect(() => {
+  React.useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Sử dụng useMemo để tối ưu performance
+  const LazyModalComponent = React.useMemo(() => {
+    if (!type) return null;
+    return getLazyModal(type);
+  }, [type]);
 
   if (!isMounted) {
     return null;
   }
 
+  if (!isOpen || !type || !LazyModalComponent) {
+    return null;
+  }
+
   return (
-    <>
-      <CreateServerModal />
-      <JoinModal />
-      <InviteModal />
-      <EditServerModal />
-      <MembersModal />
-      <CreateChannelModal />
-      <LeaveServerModal />
-      <DeleteServerModal />
-      <DeleteChannelModal />
-      <EditChannelModal />
-      <MessageFileModal />
-      <DeleteMessageModal />
-    </>
+    <React.Suspense fallback={<div>Loading modal...</div>}>
+      <LazyModalComponent />
+    </React.Suspense>
   );
 };
